@@ -1,13 +1,8 @@
 #include <iostream>
 #include <Windows.h>
 #include <fstream>
+#include <vector>
 
-
-struct option {
-
-	std::string ELEMENT;
-
-};
 
 struct EDITOR {
 	
@@ -29,9 +24,19 @@ static void openEditor(EDITOR editor) noexcept {
 
 }
 
-std::ofstream writeFiled(option Option, std::ofstream file);
+struct vec {
+	std::string vec1;
+};
 
-std::ofstream writeFiled(option Option, std::ofstream file) noexcept {
+struct option {
+
+	std::string ELEMENT;
+
+};
+
+
+
+void writeFiled(option Option, std::ofstream file) {
 
 	
 
@@ -39,24 +44,30 @@ std::ofstream writeFiled(option Option, std::ofstream file) noexcept {
 
 
 		file << Option.ELEMENT;
-		file.close();
+		//file.close();
 
 	}
 
-
-	return file;
+	file.close();
 }
 
-std::ofstream BasicTemplate(std::string HTML, std::ofstream file) noexcept {
+
+static void writeFile1(std::string html, std::ofstream file) {
+
+
 
 	if (file.is_open()) {
 
-		file << HTML;
+
+		file << html;
+		//file.close();
+
 	}
 
-	return file;
-
+	file.close();
 }
+
+
 
 struct ELEMENT {
 
@@ -64,40 +75,84 @@ struct ELEMENT {
 
 };
 
+
 bool isWorking = false;
 
 int main() {
 
-	option Option{};
+	option Option;
 	EDITOR ed;
 	ELEMENT element;
 
-	std::ofstream file;
-
-	std::string name;
+	vec vector1;
 
 	while (!isWorking) {
 
+		std::cout << "Enter Editor: " << std::endl;
+		std::string IDE;
 
-		if (file.is_open()) {
+		std::cin >> ed.codeEditor;
 
-			std::cin >> ed.codeEditor;
-
-			writeFiled(Option, std::move(file));
+		if (IDE == "Code") {
 			openEditor(ed);
+		
 
-			std::cout << "What Type of Element: " << std::endl;
-			std::cin >> element.HTMLElement;
+			std::string template1;
+			std::ofstream file("index.html");
 
+			std::cout << "Template Y | N: " << std::endl;
+			std::cin >> template1;
 
-			BasicTemplate(element.HTMLElement, std::move(file));
+			if (template1 == "Yes") {
+
+				std::string starterHTML = "<!DOCTYPE html>\n <html><head></head></html>";
+
+				writeFile1(starterHTML, std::move(file));
+			}
+			else {
+
+				//openEditor(ed);
+
+				std::cout << "What Type of Element: " << std::endl;
+				std::cin >> Option.ELEMENT;
+
+				writeFiled(Option, std::move(file));
+
+			}
+
+		}
+		else {
+	
+
+			std::string template1;
+			std::ofstream file("index.html");
+
+			std::cout << "Template Y | N: " << std::endl;
+			std::cin >> template1;
+
+			if (template1 == "Yes") {
+
+				std::string starterHTML = "<!DOCTYPE html>\n <html><head></head></html>";
+
+				writeFile1(starterHTML, std::move(file));
+			}
+			else {
+
+				//openEditor(ed);
+
+				std::cout << "What Type of Element: " << std::endl;
+				std::cin >> Option.ELEMENT;
+
+				writeFiled(Option, std::move(file));
+
+			}
+
 
 		}
 
+
 		isWorking = true;
-
 	}
-
 
 	system("pause > 0");
 	return 0;
