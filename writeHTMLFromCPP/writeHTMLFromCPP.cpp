@@ -1,13 +1,28 @@
 #include <iostream>
 #include <Windows.h>
 #include <fstream>
+#include <thread>
 #include <vector>
 
+std::atomic<bool> flag{ false };
 
 struct EDITOR {
 	
 	std::string codeEditor;
 };
+
+static void joinedThreadsFile() {
+
+	std::thread t;
+		
+	while (flag == false) {
+
+		t.join();
+		
+		flag = true;
+	}
+
+}
 
 static void openEditor(EDITOR editor) noexcept {
 
@@ -21,8 +36,9 @@ static void openEditor(EDITOR editor) noexcept {
 	}
 	
 
-
 }
+
+
 
 struct vec {
 	std::string vec1;
@@ -60,7 +76,7 @@ static void writeFile1(std::string html, std::ofstream file) {
 
 
 		file << html;
-		//file.close();
+		joinedThreadsFile();
 
 	}
 
@@ -93,7 +109,7 @@ int main() {
 
 		std::cin >> ed.codeEditor;
 
-		if (IDE == "Code") {
+		if (ed.codeEditor == "Code") {
 			openEditor(ed);
 		
 
@@ -107,6 +123,7 @@ int main() {
 
 				std::string starterHTML = "<!DOCTYPE html>\n <html><head></head></html>";
 
+				joinedThreadsFile();
 				writeFile1(starterHTML, std::move(file));
 			}
 			else {
@@ -116,6 +133,7 @@ int main() {
 				std::cout << "What Type of Element: " << std::endl;
 				std::cin >> Option.ELEMENT;
 
+				joinedThreadsFile();
 				writeFiled(Option, std::move(file));
 
 			}
@@ -134,6 +152,7 @@ int main() {
 
 				std::string starterHTML = "<!DOCTYPE html>\n <html><head></head></html>";
 
+				joinedThreadsFile();
 				writeFile1(starterHTML, std::move(file));
 			}
 			else {
@@ -143,6 +162,7 @@ int main() {
 				std::cout << "What Type of Element: " << std::endl;
 				std::cin >> Option.ELEMENT;
 
+				joinedThreadsFile();
 				writeFiled(Option, std::move(file));
 
 			}
