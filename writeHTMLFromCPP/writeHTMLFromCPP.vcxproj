@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FeatureTemplateLanguagesFunctions.cpp" />
     <ClCompile Include="writeHTMLFromCPP.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -5,8 +5,12 @@
 #include <vector>
 #include <utility>
 #include "FeatureLanguagesTemplates.hpp"
+#include "FeatureTemplateLanguagesFunctions.cpp"
 
 std::atomic<bool> flag{ false };
+
+std::ofstream file("index.html");
+std::ofstream fileJS("index.js");
 
 struct EDITOR {
 	
@@ -121,7 +125,10 @@ static void writeFile1(std::string html, std::ofstream file) {
 	file.close();
 }
 
-
+struct TypedProject {
+	
+	std::string typeProject;
+};
 
 struct ELEMENT {
 
@@ -137,6 +144,8 @@ int main() {
 	option Option;
 	EDITOR ed;
 	ELEMENT element;
+
+	TypedProject project;
 
 	vec vector1;
 
@@ -159,34 +168,71 @@ int main() {
 			std::cout << "Template Y | N: " << std::endl;
 			std::cin >> template1;
 
+
+
 			if (template1 == "Yes") {
+
+				std::cout << "Template Type: (HTML, CSS, JS): " << std::endl;
+				std::cin >> project.typeProject;
 
 				int index = 0;
 
-				std::string starterHTML = "<!DOCTYPE html>\n <html><head></head></html>";
+				if (project.typeProject == "HTML") {
 
-				std::cout << "HTML/CSS/JS: " << std::endl;
+					std::cout << "HTML/CSS/JS: " << std::endl;
+					std::cin >> index;
 
-				std::cin >> index;
-
-				Languages lang = (Languages) index;
+					if (index == 1) {
 
 
-				joinedThreadsFile();
-				writeFile1(starterHTML, std::move(file));
+						std::string starterHTML = "<!DOCTYPE html>\n <html><head></head></html>";
+
+						std::cout << "HTML/CSS/JS: " << std::endl;
+
+						std::cin >> index;
+
+						Languages lang = (Languages)index;
+
+
+						joinedThreadsFile();
+						writeFile1(starterHTML, std::move(file));
+
+						printOption(lang);
+
+
+						std::cout << "What Type of Element: " << std::endl;
+						std::cin >> Option.ELEMENT;
+
+						joinedThreadsFile();
+						writeFiled(Option, std::move(file));
+
+					}
+					else {
+
+
+						std::cout << "Enter Code to Append to File: " << std::endl;
+						std::string code;
+
+						std::cin >> code;
+
+						if (file.is_open()) {
+
+
+
+							createFileFunctionEnable(code, std::move(fileJS));
+						
+						}
+
+					}
+
+				}
 			
-				printOption(lang);
+			
 			}
 
 			else {
 
 				//openEditor(ed);
-
-				std::cout << "What Type of Element: " << std::endl;
-				std::cin >> Option.ELEMENT;
-
-				joinedThreadsFile();
-				writeFiled(Option, std::move(file));
 
 			}
 
@@ -195,10 +241,19 @@ int main() {
 	
 
 			std::string template1;
-			std::ofstream file("index.html");
+
 
 			std::cout << "Template Y | N: " << std::endl;
 			std::cin >> template1;
+
+
+			std::cout << "Template Y | N: " << std::endl;
+			std::cin >> project.typeProject;
+
+			if (project.typeProject == "JS") {
+
+				createFileFunctionEnable(project.typeProject, std::move(fileJS))
+			}
 
 			if (template1 == "Yes") {
 
