@@ -3,6 +3,8 @@
 #include <fstream>
 #include <thread>
 #include <vector>
+#include <utility>
+#include "FeatureLanguagesTemplates.hpp"
 
 std::atomic<bool> flag{ false };
 
@@ -50,7 +52,43 @@ struct option {
 
 };
 
+struct LanguagesNames {
 
+	Languages lang;
+};
+
+int printOption(Languages lang) noexcept {
+	
+
+	int index;
+	Languages Lang = Languages::HTML;
+	
+	std::cin >> index;
+
+	if (index == 1) {
+
+
+		int htmlIndex = std::to_underlying(lang);
+		std::cout << "HTML Index: " << htmlIndex << std::endl;
+
+	}
+
+	if (index == 2) {
+
+		Languages langCSS = Languages::CSS;
+		int cssIndex = std::to_underlying(langCSS);
+		std::cout << "CSS Index: " << cssIndex << std::endl;
+	}
+
+	if (index == 3) {
+
+		Languages langJS = Languages::JS;
+		int jsIndex = std::to_underlying(langJS);
+		std::cout << "JS Index: " << jsIndex << std::endl;
+	}
+
+	return index;
+}
 
 void writeFiled(option Option, std::ofstream file) {
 
@@ -109,6 +147,8 @@ int main() {
 
 		std::cin >> ed.codeEditor;
 
+		
+
 		if (ed.codeEditor == "Code") {
 			openEditor(ed);
 		
@@ -121,11 +161,23 @@ int main() {
 
 			if (template1 == "Yes") {
 
+				int index = 0;
+
 				std::string starterHTML = "<!DOCTYPE html>\n <html><head></head></html>";
+
+				std::cout << "HTML/CSS/JS: " << std::endl;
+
+				std::cin >> index;
+
+				Languages lang = (Languages) index;
+
 
 				joinedThreadsFile();
 				writeFile1(starterHTML, std::move(file));
+			
+				printOption(lang);
 			}
+
 			else {
 
 				//openEditor(ed);
